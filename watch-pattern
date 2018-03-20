@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# Title: watch-pattern
+# Description: This script will monitor live new occurrence of PATTERN in LOG_FILE
+# Author: William Chanrico
+# Date: 20-Mar-2018
+
+echo " _____________________    "
+echo "/ hello, who's there? \\  "
+echo "\\ william said hi...  /  "
+echo " ---------------------    "
+echo "       \\   ,__,          "
+echo "        \\  (..)____      "
+echo "           (__)    )\     "
+echo "              ||--|| *    "
+echo -e "Monitor new PATTERN occurrence in LOG_FILE\n"
+
+if [[ -z $1 ]]; then
+	echo -e "usage: $0 PATTERN LOG_FILE\n";
+	exit;
+fi
+
+pattern=$1
+file=$2
+line=""
+
+while read -r line; do
+	if [[ "$line" == *"$pattern"* ]]; then
+		# write post-match scripts here
+		#ntfy -o device_iden ujviRNYx41csjz7O3P0Jl6 -b pushbullet send "$line"
+		#ntfy -o device_iden ujviRNYx41csjAiVsKnSTs -b pushbullet send "$line"
+
+		break
+	fi
+done< <(exec tail -fn0 "$file")
+
+echo "matched: $line"
